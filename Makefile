@@ -3,7 +3,7 @@ default: build
 build:
 	cd cmd/server; \
 	go build
-	cd cmd/todo; \
+	cd cmd/vegetable; \
 	go build
 
 migrate:

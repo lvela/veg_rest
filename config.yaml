@@ -1,5 +1,5 @@
 svchost: :8080
-dbuser: root
+dbuser: ""
 dbpassword: ""
 dbhost: localhost
-dbname: Todo
+dbname: vegetables

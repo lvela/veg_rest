@@ -2,55 +2,56 @@ package main
 
 import (
 	"fmt"
-	"github.com/benschw/go-todo/api"
-	"github.com/benschw/go-todo/client"
 	"log"
 	"reflect"
 	"testing"
+
+	"veg_rest2/api"
+	"veg_rest2/client"
 )
 
 var _ = fmt.Print // For debugging; delete when done.
 var _ = log.Print // For debugging; delete when done.
 
-func TestUpdateTodo(t *testing.T) {
+func TestUpdateVegetable(t *testing.T) {
 
 	// given
-	client := client.TodoClient{Host: "http://localhost:8080"}
-	todo, _ := client.CreateTodo("foo", "bar")
+	client := client.VegetableClient{Host: "http://localhost:8080"}
+	todo, _ := client.CreateVegetable("foo", "bar")
 
 	// when
 	todo.Status = "doing"
 	todo.Title = "baz"
 	todo.Description = "bing"
-	_, err := client.UpdateTodo(todo)
+	_, err := client.UpdateVegetable(todo)
 
 	// then
 	if err != nil {
 		t.Error(err)
 	}
 
-	todoResult, _ := client.GetTodo(todo.Id)
+	todoResult, _ := client.GetVegetable(todo.Id)
 
 	if !reflect.DeepEqual(todo, todoResult) {
 		t.Error("returned todo not updated")
 	}
 
 	// cleanup
-	_ = client.DeleteTodo(todo.Id)
+	_ = client.DeleteVegetable(todo.Id)
 }
 
-func TestUpdateNonExistantTodo(t *testing.T) {
+func TestUpdateNonExistantVegetable(t *testing.T) {
 
 	// given
-	client := client.TodoClient{Host: "http://localhost:8080"}
-	todo, _ := client.CreateTodo("foo", "bar")
-	_ = client.DeleteTodo(todo.Id)
+	client := client.VegetableClient{Host: "http://localhost:8080"}
+	todo, _ := client.CreateVegetable("foo", "bar")
+	_ = client.DeleteVegetable(todo.Id)
 
 	// when
 	todo.Status = "doing"
 	todo.Title = "baz"
 	todo.Description = "bing"
-	_, err := client.UpdateTodo(todo)
+	_, err := client.UpdateVegetable(todo)
 
 	// then
 	if err == nil {
@@ -59,37 +60,37 @@ func TestUpdateNonExistantTodo(t *testing.T) {
 
 }
 
-func TestUpdateTodosStatus(t *testing.T) {
+func TestUpdateVegetablesStatus(t *testing.T) {
 
 	// given
-	client := client.TodoClient{Host: "http://localhost:8080"}
-	todo, _ := client.CreateTodo("foo", "bar")
+	client := client.VegetableClient{Host: "http://localhost:8080"}
+	todo, _ := client.CreateVegetable("foo", "bar")
 
 	// when
-	_, err := client.UpdateTodoStatus(todo.Id, api.DoingStatus)
+	_, err := client.UpdateVegetableStatus(todo.Id, api.DoingStatus)
 
 	// then
 	if err != nil {
 		t.Error(err)
 	}
 
-	todoResult, _ := client.GetTodo(todo.Id)
+	todoResult, _ := client.GetVegetable(todo.Id)
 
 	if todoResult.Status != "doing" {
 		t.Error("returned todo status not updated")
 	}
 
 	// cleanup
-	_ = client.DeleteTodo(todo.Id)
+	_ = client.DeleteVegetable(todo.Id)
 }
 
-func TestUpdateNotFoundTodosStatus(t *testing.T) {
+func TestUpdateNotFoundVegetablesStatus(t *testing.T) {
 
 	// given
-	client := client.TodoClient{Host: "http://localhost:8080"}
+	client := client.VegetableClient{Host: "http://localhost:8080"}
 	id := int32(3)
 	// when
-	_, err := client.UpdateTodoStatus(id, api.DoingStatus)
+	_, err := client.UpdateVegetableStatus(id, api.DoingStatus)
 
 	// then
 	if err == nil {

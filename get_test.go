@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
-	"github.com/benschw/go-todo/client"
 	"log"
 	"testing"
+
+	"veg_rest2/client"
 )
 
 var _ = fmt.Print // For debugging; delete when done.

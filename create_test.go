@@ -2,31 +2,32 @@ package main
 
 import (
 	"fmt"
-	"github.com/benschw/go-todo/client"
 	"log"
 	"testing"
+
+	"veg_rest2/client"
 )
 
 var _ = fmt.Print // For debugging; delete when done.
 var _ = log.Print // For debugging; delete when done.
 
-func TestCreateTodo(t *testing.T) {
+func TestCreateVegetable(t *testing.T) {
 
 	// given
-	client := client.TodoClient{Host: "http://localhost:8080"}
+	client := client.VegetableClient{Host: "http://localhost:8080"}
 
 	// when
-	todo, err := client.CreateTodo("foo", "bar")
+	vegetable, err := client.CreateVegetable("foo", "bar")
 
 	//then
 	if err != nil {
 		t.Error(err)
 	}
 
-	if todo.Title != "foo" && todo.Description != "bar" {
-		t.Error("returned todo not right")
+	if vegetable.Title != "foo" && vegetable.Description != "bar" {
+		t.Error("returned vegetable not right")
 	}
 
 	// cleanup
-	_ = client.DeleteTodo(todo.Id)
+	_ = client.DeleteVegetable(vegetable.Id)
 }

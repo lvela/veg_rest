@@ -2,12 +2,14 @@ package main
 
 import (
 	"errors"
-	"github.com/benschw/go-todo/service"
-	"github.com/codegangsta/cli"
 	"gopkg.in/yaml.v1"
 	"io/ioutil"
 	"log"
 	"os"
+
+	"veg_rest2/service"
+
+	"github.com/codegangsta/cli"
 )
 
 func getConfig(c *cli.Context) (service.Config, error) {
@@ -35,7 +37,10 @@ func main() {
 	app.Version = "0.0.1"
 
 	app.Flags = []cli.Flag{
-		cli.StringFlag{"config, c", "config.yaml", "config file to use"},
+		cli.StringFlag{
+			Name:  "config, c",
+			Value: "config.yaml",
+			Usage: "config file to use"},
 	}
 
 	app.Commands = []cli.Command{
@@ -49,7 +54,7 @@ func main() {
 					return
 				}
 
-				svc := service.TodoService{}
+				svc := service.VegetableService{}
 
 				if err = svc.Run(cfg); err != nil {
 					log.Fatal(err)
@@ -66,7 +71,7 @@ func main() {
 					return
 				}
 
-				svc := service.TodoService{}
+				svc := service.VegetableService{}
 
 				if err = svc.Migrate(cfg); err != nil {
 					log.Fatal(err)
